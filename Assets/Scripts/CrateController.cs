@@ -39,6 +39,12 @@ public class CrateController : MonoBehaviour
             gridManager.AddCrateToGrid(this.gameObject, gridPosition);
             gridManager.CheckGridStatus();
 
+            if (gridManager.CheckForWinCondition() != null)
+            {
+                string winningCrateTag = gridManager.CheckForWinCondition();
+                Debug.Log(winningCrateTag + " Won!");
+                // Perform actions for winning condition here (e.g., display win message, end the game)
+            }
         }
     }
 
