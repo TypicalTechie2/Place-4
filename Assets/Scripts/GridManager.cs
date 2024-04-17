@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 public class GridManager : MonoBehaviour
@@ -12,12 +13,13 @@ public class GridManager : MonoBehaviour
     public float cellSize = 1f;
     public GameObject[,,] gridArray;
     public GameObject mainHolder;
+    public TextMeshProUGUI tieText;
+    public HolderControllerScript holderControllerScript;
 
     // Start is called before the first frame update
     void Start()
     {
         GenerateGrid();
-        CheckGridStatus();
     }
 
     // Update is called once per frame
@@ -47,6 +49,7 @@ public class GridManager : MonoBehaviour
 
     public void CheckGridStatus()
     {
+        bool isGridFull = true;
         for (int x = 0; x < gridSizeX; x++)
         {
             for (int y = 0; y < gridSizeY; y++)
@@ -57,8 +60,21 @@ public class GridManager : MonoBehaviour
                     {
                         Debug.Log("Cell at position (" + x + ", " + y + ", " + z + ") is not null.");
                     }
+
+                    else
+                    {
+                        isGridFull = false;
+                    }
                 }
             }
+        }
+
+        if (isGridFull && CheckForWinCondition() == null)
+        {
+            Debug.Log("Grid is Full!");
+            tieText.gameObject.SetActive(true);
+            holderControllerScript.restartGameButton.gameObject.SetActive(true);
+            holderControllerScript.exitToMenuButton.gameObject.SetActive(true);
         }
     }
 

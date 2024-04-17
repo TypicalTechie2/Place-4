@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class HolderControllerScript : MonoBehaviour
 {
@@ -10,11 +12,19 @@ public class HolderControllerScript : MonoBehaviour
     public GameObject[] cratePrefabs;
     public float holderReleaseSpeed = 10f;
     public bool isReleased = false;
-    private float holder1XBoundary = 11f;
-    private float holder2XBoundary = -5f;
+    private float holder1XBoundary = 6f;
+    private float holder2XBoundary = 0f;
     private int crateIndex = 0;
     private GameObject spawnedCrates;
     private float mainHolderMoveSpeed = 1;
+    public TextMeshProUGUI player1Text;
+    public TextMeshProUGUI player2Text;
+    public GameObject player1TurnIndicator;
+    public GameObject player2TurnIndicator;
+    public TextMeshProUGUI player1WonText;
+    public TextMeshProUGUI player2WonText;
+    public Button restartGameButton;
+    public Button exitToMenuButton;
 
     // Start is called before the first frame update
     void Start()
@@ -32,12 +42,13 @@ public class HolderControllerScript : MonoBehaviour
 
     public void MainHolderMovement()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > 0 && !isReleased)
+        if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > 0 && !isReleased && gridManager.CheckForWinCondition() == null)
         {
             transform.Translate(Vector3.left * mainHolderMoveSpeed);
         }
 
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < (gridManager.gridSizeX - 1) * gridManager.cellSize && !isReleased)
+        else if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < (gridManager.gridSizeX - 1) * gridManager.cellSize
+                    && !isReleased && gridManager.CheckForWinCondition() == null)
         {
             transform.Translate(Vector3.right * mainHolderMoveSpeed);
         }
@@ -45,7 +56,7 @@ public class HolderControllerScript : MonoBehaviour
 
     public void HolderRelease()
     {
-        if (Input.GetKeyDown(KeyCode.Space) && !isReleased)
+        if (Input.GetKeyDown(KeyCode.Space) && !isReleased && gridManager.CheckForWinCondition() == null)
         {
             if (!CheckStackedCrateLimit())
             {
@@ -85,11 +96,41 @@ public class HolderControllerScript : MonoBehaviour
         {
             crateIndex = 0;
         }
+
+        string crateTag = cratePrefabs[crateIndex].tag;
         Vector3 spawnPosition = transform.position;
         spawnedCrates = Instantiate(cratePrefabs[crateIndex], spawnPosition, Quaternion.identity);
         spawnedCrates.transform.parent = transform;
 
+        if (crateTag == "Yellow Crate")
+        {
+            HighLightPlayer1Text();
+        }
+
+        else if (crateTag == "Red Crate")
+        {
+            HighlightPlayer2Text();
+        }
+
+        Debug.Log(crateTag + " instantiated");
+
         crateIndex++;
+    }
+
+    private void HighLightPlayer1Text()
+    {
+        player1Text.color = Color.yellow;
+        player2Text.color = Color.white;
+        player1TurnIndicator.SetActive(true);
+        player2TurnIndicator.SetActive(false);
+    }
+
+    private void HighlightPlayer2Text()
+    {
+        player1Text.color = Color.white;
+        player2Text.color = Color.red;
+        player1TurnIndicator.SetActive(false);
+        player2TurnIndicator.SetActive(true);
     }
 
     public void ResetMainHolderPosition()
@@ -123,5 +164,22 @@ public class HolderControllerScript : MonoBehaviour
         }
 
         return false; // Return false if less than six crates are stacked
+    }
+
+    public void DisplayWinnerText(string winner)
+    {
+        if (winner == "Yellow Crate")
+        {
+            player1WonText.gameObject.SetActive(true);
+            restartGameButton.gameObject.SetActive(true);
+            exitToMenuButton.gameObject.SetActive(true);
+        }
+
+        else if (winner == "Red Crate")
+        {
+            player2WonText.gameObject.SetActive(true);
+            restartGameButton.gameObject.SetActive(true);
+            exitToMenuButton.gameObject.SetActive(true);
+        }
     }
 }
