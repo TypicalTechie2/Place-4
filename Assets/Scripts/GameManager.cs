@@ -7,7 +7,8 @@ public class GameManager : MonoBehaviour
 {
     public GridManager gridManager;
     public HolderControllerScript holderControllerScript;
-    public CrateController crateControllerScript;
+    public AudioSource playButtonAudio;
+    public AudioClip restartAudio;
 
     // Start is called before the first frame update
     void Start()
@@ -21,17 +22,28 @@ public class GameManager : MonoBehaviour
 
     }
 
-    public void StartGame()
-    {
-        gridManager.GenerateGrid();
-        holderControllerScript.CrateInstantiate();
-        holderControllerScript.isReleased = false;
-        holderControllerScript.ResetMainHolderPosition();
-        holderControllerScript.ResetSubHoldersPosition();
-    }
-
+    //Restarts the game by regenerating the grid and resetting holder positions.
     public void RestartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        gridManager.GenerateGrid();
+        holderControllerScript.ResetMainHolderPosition();
+        holderControllerScript.ResetSubHoldersPosition();
+        holderControllerScript.isReleased = false;
+        playButtonAudio.PlayOneShot(restartAudio, 1f);
+
+        StartCoroutine(RestartGameAfterDelay());
+    }
+
+    //Delays the restart of the game for a smoother transition.
+    private IEnumerator RestartGameAfterDelay()
+    {
+        yield return new WaitForSeconds(1f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    // Loads the main menu scene.
+    public void ReturnToMainMenu()
+    {
+        SceneManager.LoadScene("Main Menu Scene");
     }
 }

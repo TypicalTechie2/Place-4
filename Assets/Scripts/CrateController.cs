@@ -7,15 +7,16 @@ public class CrateController : MonoBehaviour
     private HolderControllerScript holderControllerScript;
     private bool crateInstantiated = false;
     private GridManager gridManager;
-    private AudioSource crateAudio;
+    private AudioSource audioSource;
     public AudioClip crateDropSound;
+    public AudioClip winSound;
 
     // Start is called before the first frame update
     void Start()
     {
         holderControllerScript = GameObject.Find("Main Holder").GetComponent<HolderControllerScript>();
         gridManager = GameObject.Find("Grid Manager").GetComponent<GridManager>();
-        crateAudio = GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -24,6 +25,7 @@ public class CrateController : MonoBehaviour
 
     }
 
+    //Handles collision events for crates, triggers instantiation of new crates, and checks for win conditions.
     private void OnCollisionEnter(Collision collision)
     {
         if (!crateInstantiated && (collision.collider.CompareTag("Ground") ||
@@ -35,7 +37,7 @@ public class CrateController : MonoBehaviour
             holderControllerScript.ResetMainHolderPosition();
             holderControllerScript.ResetSubHoldersPosition();
             crateInstantiated = true;
-            crateAudio.PlayOneShot(crateDropSound, 1f);
+            audioSource.PlayOneShot(crateDropSound, 1f);
             //crateRB.constraints = RigidbodyConstraints.FreezeAll;
             // Get the position in grid coordinates
             Vector3Int gridPosition = GetGridPosition(transform.position);
@@ -51,6 +53,7 @@ public class CrateController : MonoBehaviour
                 // Perform actions for winning condition here (e.g., display win message, end the game)
 
                 holderControllerScript.DisplayWinnerText(winningCrateTag);
+                audioSource.PlayOneShot(winSound, 1f);
             }
         }
     }

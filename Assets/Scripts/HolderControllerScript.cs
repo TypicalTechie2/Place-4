@@ -40,6 +40,7 @@ public class HolderControllerScript : MonoBehaviour
         HolderXBoundary();
     }
 
+    //Handles the movement of the main holder left or right.
     public void MainHolderMovement()
     {
         if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > 0 && !isReleased && gridManager.CheckForWinCondition() == null)
@@ -54,6 +55,7 @@ public class HolderControllerScript : MonoBehaviour
         }
     }
 
+    //Releases the crates from the holders when Space key is pressed.
     public void HolderRelease()
     {
         if (Input.GetKeyDown(KeyCode.Space) && !isReleased && gridManager.CheckForWinCondition() == null)
@@ -77,6 +79,7 @@ public class HolderControllerScript : MonoBehaviour
         }
     }
 
+    //Ensures the holders stay within predefined boundaries.
     void HolderXBoundary()
     {
         if (holder_1.transform.position.x > holder1XBoundary)
@@ -90,6 +93,7 @@ public class HolderControllerScript : MonoBehaviour
         }
     }
 
+    //Instantiates crates onto the holders alternately.
     public void CrateInstantiate()
     {
         if (crateIndex >= cratePrefabs.Length)
@@ -99,7 +103,7 @@ public class HolderControllerScript : MonoBehaviour
 
         string crateTag = cratePrefabs[crateIndex].tag;
         Vector3 spawnPosition = transform.position;
-        spawnedCrates = Instantiate(cratePrefabs[crateIndex], spawnPosition, Quaternion.identity);
+        spawnedCrates = Instantiate(cratePrefabs[crateIndex], spawnPosition, Quaternion.Euler(0, 0, 180));
         spawnedCrates.transform.parent = transform;
 
         if (crateTag == "Yellow Crate")
@@ -133,17 +137,20 @@ public class HolderControllerScript : MonoBehaviour
         player2TurnIndicator.SetActive(true);
     }
 
+    //Resets the position of the main holder.
     public void ResetMainHolderPosition()
     {
         transform.position = new Vector3(3, 8, 0);
     }
 
+    //Resets the position of the sub holders.
     public void ResetSubHoldersPosition()
     {
         holder_1.transform.position = new Vector3(-1.5f, 1, 0);
         holder_2.transform.position = new Vector3(7.5f, 1, 0);
     }
 
+    //Checks if the stacked crate limit is reached.
     private bool CheckStackedCrateLimit()
     {
         // Cast a ray downwards from the mainHolder position to check for stacked crates
@@ -166,6 +173,7 @@ public class HolderControllerScript : MonoBehaviour
         return false; // Return false if less than six crates are stacked
     }
 
+    //Displays the winner's text based on the provided winner.
     public void DisplayWinnerText(string winner)
     {
         if (winner == "Yellow Crate")

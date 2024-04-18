@@ -28,6 +28,7 @@ public class GridManager : MonoBehaviour
 
     }
 
+    //Creates a grid of cells using the specified prefab and dimensions.
     public void GenerateGrid()
     {
         gridArray = new GameObject[gridSizeX, gridSizeY, gridSizeZ];
@@ -47,6 +48,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    //Checks if the grid is full and calls other methods accordingly.
     public void CheckGridStatus()
     {
         bool isGridFull = true;
@@ -78,11 +80,13 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    //Adds a crate to the grid array at the specified position.
     public void AddCrateToGrid(GameObject crate, Vector3Int position)
     {
         gridArray[position.x, position.y, position.z] = crate;
     }
 
+    //Checks for winning conditions by iterating through the grid array.
     public string CheckForWinCondition()
     {
         for (int x = 0; x < gridSizeX; x++)
@@ -109,6 +113,7 @@ public class GridManager : MonoBehaviour
         return null;
     }
 
+    //Checks for vertical win conditions starting from the specified position.
     private bool CheckForVerticalWin(string crateTag, int startX, int startY, int startZ)
     {
         if (startY <= gridSizeY - 4)
@@ -123,6 +128,7 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    //Checks for horizontal win conditions starting from the specified position.
     private bool CheckForHorizontalWin(string crateTag, int startX, int startY, int startZ)
     {
         if (startX <= gridSizeX - 4)
@@ -137,6 +143,7 @@ public class GridManager : MonoBehaviour
         return false;
     }
 
+    //Checks for diagonal win conditions starting from the specified position.
     private bool CheckForDiagonalWin(string crateTag, int startX, int startY, int startZ)
     {
         // Check diagonal \
