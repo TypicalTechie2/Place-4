@@ -29,7 +29,7 @@ public class GameManager : MonoBehaviour
         holderControllerScript.ResetMainHolderPosition();
         holderControllerScript.ResetSubHoldersPosition();
         holderControllerScript.isReleased = false;
-        playButtonAudio.PlayOneShot(restartAudio, 1f);
+        playButtonAudio.PlayOneShot(restartAudio, 0.5f);
 
         StartCoroutine(RestartGameAfterDelay());
     }

@@ -15,6 +15,7 @@ public class GridManager : MonoBehaviour
     public GameObject mainHolder;
     public TextMeshProUGUI tieText;
     public HolderControllerScript holderControllerScript;
+    public Material winningMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -123,6 +124,9 @@ public class GridManager : MonoBehaviour
                 if (gridArray[startX, y, startZ] == null || !gridArray[startX, y, startZ].CompareTag(crateTag))
                     return false;
             }
+
+            Debug.Log("Vertical Win Condition Met!");
+            LogWinningCrates(crateTag, startX, startY, startZ, 0, 1, 0);
             return true;
         }
         return false;
@@ -138,6 +142,9 @@ public class GridManager : MonoBehaviour
                 if (gridArray[x, startY, startZ] == null || !gridArray[x, startY, startZ].CompareTag(crateTag))
                     return false;
             }
+
+            Debug.Log("Horizontal Win Condition Met!");
+            LogWinningCrates(crateTag, startX, startY, startZ, 1, 0, 0);
             return true;
         }
         return false;
@@ -154,6 +161,9 @@ public class GridManager : MonoBehaviour
                 if (gridArray[startX + i, startY + i, startZ] == null || !gridArray[startX + i, startY + i, startZ].CompareTag(crateTag))
                     return false;
             }
+
+            Debug.Log("Diagonal \\ Win Condition Met!");
+            LogWinningCrates(crateTag, startX, startY, startZ, 1, 1, 0);
             return true;
         }
 
@@ -165,9 +175,37 @@ public class GridManager : MonoBehaviour
                 if (gridArray[startX - i, startY + i, startZ] == null || !gridArray[startX - i, startY + i, startZ].CompareTag(crateTag))
                     return false;
             }
+
+            Debug.Log("Diagonal / Win Condition Met!");
+            LogWinningCrates(crateTag, startX, startY, startZ, -1, 1, 0);
             return true;
         }
 
         return false;
+    }
+
+    // Record Crates that formded winning pattern
+    private void LogWinningCrates(string crateTag, int startX, int startY, int startZ, int stepX, int stepY, int stepZ)
+    {
+
+        for (int i = 0; i < 4; i++)
+        {
+            int x = startX + i * stepX;
+            int y = startY + i * stepY;
+            int z = startZ + i * stepZ;
+            Debug.Log(crateTag + " at position (" + x + ", " + y + ", " + z + ") is part of the winning pattern.");
+
+            GameObject winningCrate = gridArray[x, y, z];
+            if (winningCrate != null)
+            {
+                Renderer crateRenderer = winningCrate.GetComponent<Renderer>();
+                if (crateRenderer != null && crateRenderer.materials.Length >= 2)
+                {
+                    Material material = crateRenderer.material;
+                    material = winningMaterial;
+                    crateRenderer.material = material;
+                }
+            }
+        }
     }
 }

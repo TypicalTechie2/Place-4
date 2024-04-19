@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!21 &-854061744559266631
+--- !u!21 &-6496197606245555656
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
@@ -36,7 +36,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 7441552431539422405}
+        m_Texture: {fileID: 5642332181496894646}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: TESLA SDF
   m_EditorClassIdentifier: 
   hashCode: -714014306
-  material: {fileID: -854061744559266631}
+  material: {fileID: -6496197606245555656}
   materialHashCode: -68193666
   m_Version: 1.1.0
   m_SourceFontFileGUID: 9cd46540f7b97964090702a8c9ec14ff
@@ -1958,7 +1958,7 @@ MonoBehaviour:
     m_GlyphIndex: 97
     m_Scale: 1
   m_AtlasTextures:
-  - {fileID: 7441552431539422405}
+  - {fileID: 5642332181496894646}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_ClearDynamicDataOnBuild: 0
@@ -2583,7 +2583,7 @@ MonoBehaviour:
   boldSpacing: 7
   italicStyle: 35
   tabSize: 10
---- !u!28 &7441552431539422405
+--- !u!28 &5642332181496894646
 Texture2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

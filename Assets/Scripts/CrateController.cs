@@ -53,11 +53,12 @@ public class CrateController : MonoBehaviour
                 // Perform actions for winning condition here (e.g., display win message, end the game)
 
                 holderControllerScript.DisplayWinnerText(winningCrateTag);
-                audioSource.PlayOneShot(winSound, 1f);
+                audioSource.PlayOneShot(winSound, 0.5f);
             }
         }
     }
 
+    //Reference to the Grid position;
     private Vector3Int GetGridPosition(Vector3 worldPosition)
     {
         int x = Mathf.RoundToInt(worldPosition.x / gridManager.cellSize);

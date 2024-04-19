@@ -25,6 +25,11 @@ public class HolderControllerScript : MonoBehaviour
     public TextMeshProUGUI player2WonText;
     public Button restartGameButton;
     public Button exitToMenuButton;
+    public TextMeshProUGUI countDownText;
+    private float countdownTimer = 5f;
+    private bool isTimerActive = false;
+    public AudioSource audioSource;
+    public AudioClip timerSound;
 
     // Start is called before the first frame update
     void Start()
@@ -38,6 +43,24 @@ public class HolderControllerScript : MonoBehaviour
         MainHolderMovement();
         HolderRelease();
         HolderXBoundary();
+
+        if (isTimerActive)
+        {
+            countDownText.text = "" + Mathf.RoundToInt(countdownTimer);
+            countdownTimer -= Time.deltaTime;
+
+            if (countdownTimer <= 0f)
+            {
+                // Timer expired, move holder and release crate
+                MoveHolderAndReleaseCrate();
+                audioSource.PlayOneShot(timerSound, 1f);
+            }
+        }
+
+        if (gridManager.CheckForWinCondition() != null)
+        {
+            isTimerActive = false;
+        }
     }
 
     //Handles the movement of the main holder left or right.
@@ -106,6 +129,8 @@ public class HolderControllerScript : MonoBehaviour
         spawnedCrates = Instantiate(cratePrefabs[crateIndex], spawnPosition, Quaternion.Euler(0, 0, 180));
         spawnedCrates.transform.parent = transform;
 
+        StartTimer();
+
         if (crateTag == "Yellow Crate")
         {
             HighLightPlayer1Text();
@@ -119,6 +144,60 @@ public class HolderControllerScript : MonoBehaviour
         Debug.Log(crateTag + " instantiated");
 
         crateIndex++;
+    }
+
+    public void StartTimer()
+    {
+        countdownTimer = 5f; // Reset timer
+        isTimerActive = true;
+    }
+
+    private void MoveHolderAndReleaseCrate()
+    {
+        // Reset timer and flag
+        isTimerActive = false;
+
+        // Move holder to a random position
+        MoveHolderToRandomPosition();
+
+        // Release the crate
+        AutoReleaseCrate();
+    }
+
+    private void MoveHolderToRandomPosition()
+    {
+        if (gridManager.CheckForWinCondition() == null)
+        {
+            // Calculate random position within valid boundaries
+            float randomX = Random.Range(holder2XBoundary, holder1XBoundary);
+
+            // Calculate the nearest grid cell position
+            float nearestGridX = Mathf.Round(randomX / gridManager.cellSize) * gridManager.cellSize;
+
+            // Move holder to the nearest grid cell position
+            Vector3 randomPosition = new Vector3(nearestGridX, transform.position.y, transform.position.z);
+            transform.position = randomPosition;
+        }
+
+    }
+
+    private void AutoReleaseCrate()
+    {
+        // Check if holder has room to release a crate
+        if (!CheckStackedCrateLimit() && gridManager.CheckForWinCondition() == null)
+        {
+            // Release the crate
+            isReleased = true;
+            if (spawnedCrates != null)
+            {
+                spawnedCrates.transform.parent = null;
+            }
+        }
+        // If no room, move holder again and release another crate
+        else
+        {
+            MoveHolderAndReleaseCrate();
+        }
     }
 
     private void HighLightPlayer1Text()
