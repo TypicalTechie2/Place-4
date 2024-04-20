@@ -1301,9 +1301,9 @@ MonoBehaviour:
   restartGameButton: {fileID: 640170379}
   exitToMenuButton: {fileID: 560700123}
   countDownText: {fileID: 1236153738}
-  isTimerActive: 0
   audioSource: {fileID: 813262731}
   timerSound: {fileID: 8300000, guid: b15cc3093f76cb64ea391fe779780213, type: 3}
+  isGameOver: 0
 --- !u!82 &813262731
 AudioSource:
   m_ObjectHideFlags: 0

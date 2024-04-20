@@ -12,10 +12,10 @@ public class GridManager : MonoBehaviour
     public int gridSizeZ = 1;
     public float cellSize = 1f;
     public GameObject[,,] gridArray;
-    [SerializeField] private GameObject mainHolder;
-    [SerializeField] private TextMeshProUGUI tieText;
-    [SerializeField] private HolderControllerScript holderControllerScript;
-    [SerializeField] private Material winningMaterial;
+    public GameObject mainHolder;
+    public TextMeshProUGUI tieText;
+    public HolderControllerScript holderControllerScript;
+    public Material winningMaterial;
 
     // Start is called before the first frame update
     void Start()
@@ -72,7 +72,6 @@ public class GridManager : MonoBehaviour
             tieText.gameObject.SetActive(true);
             holderControllerScript.restartGameButton.gameObject.SetActive(true);
             holderControllerScript.exitToMenuButton.gameObject.SetActive(true);
-            holderControllerScript.isTimerActive = false;
         }
     }
 
@@ -94,13 +93,17 @@ public class GridManager : MonoBehaviour
                     if (gridArray[x, y, z] != null && gridArray[x, y, z].CompareTag("Yellow Crate"))
                     {
                         // Check for vertical win
-                        if (CheckForVerticalWin("Yellow Crate", x, y, z) || CheckForHorizontalWin("Yellow Crate", x, y, z) || CheckForDiagonalWin("Yellow Crate", x, y, z))
+                        if (CheckForVerticalWin("Yellow Crate", x, y, z) || CheckForHorizontalWin("Yellow Crate", x, y, z) ||
+                        CheckForDiagonalWin("Yellow Crate", x, y, z) || CheckForDiagonalWin1("Yellow Crate", x, y, z))
+
                             return "Yellow Crate";
                     }
 
                     else if (gridArray[x, y, z] != null && gridArray[x, y, z].CompareTag("Red Crate"))
                     {
-                        if (CheckForVerticalWin("Red Crate", x, y, z) || CheckForHorizontalWin("Red Crate", x, y, z) || CheckForDiagonalWin("Red Crate", x, y, z))
+                        if (CheckForVerticalWin("Red Crate", x, y, z) || CheckForHorizontalWin("Red Crate", x, y, z) ||
+                        CheckForDiagonalWin("Red Crate", x, y, z) || CheckForDiagonalWin1("Red Crate", x, y, z))
+
                             return "Red Crate";
                     }
                 }
@@ -161,6 +164,11 @@ public class GridManager : MonoBehaviour
             LogWinningCrates(crateTag, startX, startY, startZ, 1, 1, 0);
             return true;
         }
+        return false;
+    }
+
+    private bool CheckForDiagonalWin1(string crateTag, int startX, int startY, int startZ)
+    {
 
         // Check diagonal /
         if (startX >= 3 && startY <= gridSizeY - 4)
