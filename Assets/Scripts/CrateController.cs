@@ -8,8 +8,8 @@ public class CrateController : MonoBehaviour
     private bool crateInstantiated = false;
     private GridManager gridManager;
     private AudioSource audioSource;
-    public AudioClip crateDropSound;
-    public AudioClip winSound;
+    [SerializeField] private AudioClip crateDropSound;
+    [SerializeField] private AudioClip winSound;
 
     // Start is called before the first frame update
     void Start()
@@ -17,12 +17,6 @@ public class CrateController : MonoBehaviour
         holderControllerScript = GameObject.Find("Main Holder").GetComponent<HolderControllerScript>();
         gridManager = GameObject.Find("Grid Manager").GetComponent<GridManager>();
         audioSource = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     //Handles collision events for crates, triggers instantiation of new crates, and checks for win conditions.

@@ -5,22 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class MainSceneManager : MonoBehaviour
 {
-    public AudioSource audioSource;
-    public AudioSource cameraAudio;
-    public AudioClip startGameSound;
-    public AudioClip BackgroundMusic;
-    public AudioClip gameExitAudio;
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioSource cameraAudio;
+    [SerializeField] private AudioClip startGameSound;
+    [SerializeField] private AudioClip gameExitAudio;
 
     //Initiates the start of the game by playing an audio clip and loading the game scene after a delay.
     public void StartGame()

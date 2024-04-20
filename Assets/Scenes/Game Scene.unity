@@ -1301,6 +1301,7 @@ MonoBehaviour:
   restartGameButton: {fileID: 640170379}
   exitToMenuButton: {fileID: 560700123}
   countDownText: {fileID: 1236153738}
+  isTimerActive: 0
   audioSource: {fileID: 813262731}
   timerSound: {fileID: 8300000, guid: b15cc3093f76cb64ea391fe779780213, type: 3}
 --- !u!82 &813262731
@@ -3127,7 +3128,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   gridCellPrefab: {fileID: 2413028329083558827, guid: f5b44ea2cdf033b49b6382e203f89362, type: 3}
-  cratePrefab: []
+  cratePrefab:
+  - {fileID: 1599988919656775014, guid: 6f1d459e843fbcb46bccb68e52d73c37, type: 3}
+  - {fileID: 2693944196001456808, guid: a1158e044a87c8e4baae4904612c6093, type: 3}
   gridSizeX: 7
   gridSizeY: 6
   gridSizeZ: 1

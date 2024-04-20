@@ -7,29 +7,29 @@ using UnityEngine.UI;
 public class HolderControllerScript : MonoBehaviour
 {
     public GridManager gridManager;
-    public GameObject holder_1;
-    public GameObject holder_2;
-    public GameObject[] cratePrefabs;
-    public float holderReleaseSpeed = 10f;
+    [SerializeField] private GameObject holder_1;
+    [SerializeField] private GameObject holder_2;
+    [SerializeField] private GameObject[] cratePrefabs;
+    [SerializeField] private float holderReleaseSpeed = 5f;
     public bool isReleased = false;
     private float holder1XBoundary = 6f;
     private float holder2XBoundary = 0f;
     private int crateIndex = 0;
     private GameObject spawnedCrates;
     private float mainHolderMoveSpeed = 1;
-    public TextMeshProUGUI player1Text;
-    public TextMeshProUGUI player2Text;
-    public GameObject player1TurnIndicator;
-    public GameObject player2TurnIndicator;
-    public TextMeshProUGUI player1WonText;
-    public TextMeshProUGUI player2WonText;
+    [SerializeField] private TextMeshProUGUI player1Text;
+    [SerializeField] private TextMeshProUGUI player2Text;
+    [SerializeField] private GameObject player1TurnIndicator;
+    [SerializeField] private GameObject player2TurnIndicator;
+    [SerializeField] private TextMeshProUGUI player1WonText;
+    [SerializeField] private TextMeshProUGUI player2WonText;
     public Button restartGameButton;
     public Button exitToMenuButton;
-    public TextMeshProUGUI countDownText;
+    [SerializeField] private TextMeshProUGUI countDownText;
     private float countdownTimer = 5f;
-    private bool isTimerActive = false;
-    public AudioSource audioSource;
-    public AudioClip timerSound;
+    public bool isTimerActive = false;
+    [SerializeField] private AudioSource audioSource;
+    [SerializeField] private AudioClip timerSound;
 
     // Start is called before the first frame update
     void Start()

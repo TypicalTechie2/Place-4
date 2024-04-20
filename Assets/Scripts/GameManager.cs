@@ -10,18 +10,6 @@ public class GameManager : MonoBehaviour
     public AudioSource playButtonAudio;
     public AudioClip restartAudio;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
-
     //Restarts the game by regenerating the grid and resetting holder positions.
     public void RestartGame()
     {

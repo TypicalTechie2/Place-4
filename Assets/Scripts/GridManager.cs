@@ -12,21 +12,15 @@ public class GridManager : MonoBehaviour
     public int gridSizeZ = 1;
     public float cellSize = 1f;
     public GameObject[,,] gridArray;
-    public GameObject mainHolder;
-    public TextMeshProUGUI tieText;
-    public HolderControllerScript holderControllerScript;
-    public Material winningMaterial;
+    [SerializeField] private GameObject mainHolder;
+    [SerializeField] private TextMeshProUGUI tieText;
+    [SerializeField] private HolderControllerScript holderControllerScript;
+    [SerializeField] private Material winningMaterial;
 
     // Start is called before the first frame update
     void Start()
     {
         GenerateGrid();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-
     }
 
     //Creates a grid of cells using the specified prefab and dimensions.
@@ -78,6 +72,7 @@ public class GridManager : MonoBehaviour
             tieText.gameObject.SetActive(true);
             holderControllerScript.restartGameButton.gameObject.SetActive(true);
             holderControllerScript.exitToMenuButton.gameObject.SetActive(true);
+            holderControllerScript.isTimerActive = false;
         }
     }
 
