@@ -68,6 +68,8 @@ public class GridManager : MonoBehaviour
 
         if (isGridFull && CheckForWinCondition() == null)
         {
+            holderControllerScript.isTimerActive = false;
+            holderControllerScript.isGameOver = true;
             Debug.Log("Grid is Full!");
             tieText.gameObject.SetActive(true);
             holderControllerScript.restartGameButton.gameObject.SetActive(true);

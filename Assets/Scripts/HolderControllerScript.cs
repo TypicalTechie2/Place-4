@@ -27,7 +27,7 @@ public class HolderControllerScript : MonoBehaviour
     public Button exitToMenuButton;
     public TextMeshProUGUI countDownText;
     private float countdownTimer = 5f;
-    private bool isTimerActive = false;
+    public bool isTimerActive = false;
     public AudioSource audioSource;
     public AudioClip timerSound;
     public bool isGameOver = false;
