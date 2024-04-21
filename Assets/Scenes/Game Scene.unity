@@ -3127,7 +3127,7 @@ GameObject:
   - component: {fileID: 1674009476}
   - component: {fileID: 1674009475}
   m_Layer: 5
-  m_Name: Image
+  m_Name: Clock Image
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
