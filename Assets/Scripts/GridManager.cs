@@ -16,6 +16,8 @@ public class GridManager : MonoBehaviour
     public TextMeshProUGUI tieText;
     public HolderControllerScript holderControllerScript;
     public Material winningMaterial;
+    public AudioSource audioSource;
+    public AudioClip tieSound;
 
     // Start is called before the first frame update
     void Start()
@@ -72,6 +74,7 @@ public class GridManager : MonoBehaviour
             holderControllerScript.isGameOver = true;
             Debug.Log("Grid is Full!");
             tieText.gameObject.SetActive(true);
+            audioSource.PlayOneShot(tieSound, 1f);
             holderControllerScript.restartGameButton.gameObject.SetActive(true);
             holderControllerScript.exitToMenuButton.gameObject.SetActive(true);
         }

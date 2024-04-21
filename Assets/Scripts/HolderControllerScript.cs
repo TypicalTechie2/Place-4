@@ -10,7 +10,7 @@ public class HolderControllerScript : MonoBehaviour
     public GameObject holder_1;
     public GameObject holder_2;
     public GameObject[] cratePrefabs;
-    public float holderReleaseSpeed = 10f;
+    public float holderReleaseSpeed = 5f;
     public bool isReleased = false;
     private float holder1XBoundary = 6f;
     private float holder2XBoundary = 0f;
@@ -71,16 +71,34 @@ public class HolderControllerScript : MonoBehaviour
     //Handles the movement of the main holder left or right.
     public void MainHolderMovement()
     {
-        if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > 0 && !isReleased && gridManager.CheckForWinCondition() == null)
+        if (spawnedCrates.CompareTag("Yellow Crate"))
         {
-            transform.Translate(Vector3.left * mainHolderMoveSpeed);
+            if (Input.GetKeyDown(KeyCode.LeftArrow) && transform.position.x > 0 && !isReleased && gridManager.CheckForWinCondition() == null)
+            {
+                transform.Translate(Vector3.left * mainHolderMoveSpeed);
+            }
+
+            else if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < (gridManager.gridSizeX - 1) * gridManager.cellSize
+                        && !isReleased && gridManager.CheckForWinCondition() == null)
+            {
+                transform.Translate(Vector3.right * mainHolderMoveSpeed);
+            }
         }
 
-        else if (Input.GetKeyDown(KeyCode.RightArrow) && transform.position.x < (gridManager.gridSizeX - 1) * gridManager.cellSize
-                    && !isReleased && gridManager.CheckForWinCondition() == null)
+        else if (spawnedCrates.CompareTag("Red Crate"))
         {
-            transform.Translate(Vector3.right * mainHolderMoveSpeed);
+            if (Input.GetKeyDown(KeyCode.A) && transform.position.x > 0 && !isReleased && gridManager.CheckForWinCondition() == null)
+            {
+                transform.Translate(Vector3.left * mainHolderMoveSpeed);
+            }
+
+            else if (Input.GetKeyDown(KeyCode.D) && transform.position.x < (gridManager.gridSizeX - 1) * gridManager.cellSize
+                        && !isReleased && gridManager.CheckForWinCondition() == null)
+            {
+                transform.Translate(Vector3.right * mainHolderMoveSpeed);
+            }
         }
+
     }
 
     //Releases the crates from the holders when Space key is pressed.
